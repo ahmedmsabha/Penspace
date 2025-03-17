@@ -26,6 +26,13 @@ coverage
 out/
 build
 dist
+**/dist/*
+**/build/*
+**/out/*
+**/node_modules/*
+**/pnpm-lock.yaml
+**/pnpm-workspace.yaml
+**/turbo.json
 
 
 # Debug
