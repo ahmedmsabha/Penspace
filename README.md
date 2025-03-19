@@ -1,84 +1,169 @@
-# Turborepo starter
+# PenSpace - A Modern Blogging Platform
 
-This Turborepo starter is maintained by the Turborepo core team.
+PenSpace is a full-stack blogging platform built with a modern tech stack using a monorepo architecture powered by Turborepo. The application allows users to create, read, and interact with blog posts through a clean and intuitive interface.
 
-## Using this example
+## 🚀 Tech Stack
 
-Run the following command:
+### Backend (API)
 
-```sh
-npx create-turbo@latest
-```
+- **Framework**: NestJS
+- **API**: GraphQL with Apollo Server
+- **Authentication**: JWT, OAuth (Google, GitHub)
+- **Database**: SQLite with Prisma ORM
+- **Testing**: Jest
 
-## What's inside?
+### Frontend
 
-This Turborepo includes the following packages/apps:
+- **Framework**: Next.js 15
+- **State Management**: TanStack Query
+- **Styling**: Tailwind CSS with shadcn/ui components
+- **Authentication**: Next.js middleware with JWT
 
-### Apps and Packages
+### DevOps
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+- **Package Manager**: pnpm
+- **Build Tool**: Turborepo
+- **Language**: TypeScript
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
+## 📁 Project Structure
 
 ```
-cd my-turborepo
-pnpm build
+penspace-turborepo/
+├── apps/
+│   ├── api/             # NestJS GraphQL API
+│   │   ├── prisma/      # Database schema and migrations
+│   │   └── src/         # API source code
+│   └── front/           # Next.js frontend application
+│       └── src/         # Frontend source code
+└── packages/
+    ├── ui/              # Shared UI components
+    ├── eslint-config/   # Shared ESLint configurations
+    └── typescript-config/ # Shared TypeScript configurations
 ```
 
-### Develop
+## 🔑 Environment Variables
 
-To develop all apps and packages, run the following command:
+### API (.env)
 
 ```
-cd my-turborepo
+# Database
+DATABASE_URL="file:./dev.db"
+
+# Authentication
+JWT_SECRET=your_jwt_secret
+JWT_EXPIRES_IN=24h
+
+# OAuth - Google
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+GOOGLE_CALLBACK_URL=http://localhost:8000/auth/google/callback
+
+# OAuth - GitHub
+GITHUB_CLIENT_ID=your_github_client_id
+GITHUB_CLIENT_SECRET=your_github_client_secret
+GITHUB_CALLBACK_URL=http://localhost:8000/auth/github/callback
+```
+
+### Frontend (.env)
+
+```
+# Session
+SESSION_SECRET_KEY=your_session_secret_key
+
+# Supabase (for file storage)
+SUPABASE_URL=your_supabase_url
+SUPABASE_API_KEY=your_supabase_api_key
+```
+
+## 🛠️ Setup & Development
+
+### Prerequisites
+
+- Node.js >= 18
+- pnpm >= 9.0.0
+
+### Installation
+
+1. Clone the repository
+
+   ```bash
+   git clone https://github.com/yourusername/penspace-turborepo.git
+   cd penspace-turborepo
+   ```
+
+2. Install dependencies
+
+   ```bash
+   pnpm install
+   ```
+
+3. Set up environment variables
+
+   - Copy `.env.example` to `.env` in both `apps/api` and `apps/front` directories
+   - Fill in your environment variables
+
+4. Initialize the database
+   ```bash
+   cd apps/api
+   pnpm prisma migrate dev
+   pnpm db:seed
+   ```
+
+### Development
+
+Run the entire project in development mode:
+
+```bash
 pnpm dev
 ```
 
-### Remote Caching
+This will start:
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+- API server on http://localhost:8000
+- Frontend on http://localhost:3000
 
-Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
+### Build
 
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
+Build all applications:
 
-```
-cd my-turborepo
-npx turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-npx turbo link
+```bash
+pnpm build
 ```
 
-## Useful Links
+## 📊 Database Schema
 
-Learn more about the power of Turborepo:
+The application uses the following data models:
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+- **User** - User accounts with authentication
+- **Post** - Blog posts created by users
+- **Comment** - Comments on blog posts
+- **Tag** - Categories/tags for posts
+- **Like** - User likes on posts
+
+## 🔒 Authentication
+
+The application supports:
+
+- Local email/password authentication
+- Google OAuth
+- GitHub OAuth
+
+## 🧪 Testing
+
+Run tests:
+
+```bash
+pnpm test
+```
+
+## 📝 License
+
+[MIT License](LICENSE)
+
+## 👥 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
