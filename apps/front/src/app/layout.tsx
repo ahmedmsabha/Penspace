@@ -4,6 +4,8 @@ import "./globals.css";
 import { NavbarContainer } from "@/components/navbar-container";
 import { Navbar } from "@/components/navbar";
 import QueryProvider from "./query-provider";
+import { Toaster } from "@/components/ui/sonner";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -35,6 +37,7 @@ export default function RootLayout({
           </NavbarContainer>
           {children}
         </QueryProvider>
+        <Toaster />
       </body>
     </html>
   );

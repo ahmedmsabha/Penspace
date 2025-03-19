@@ -127,6 +127,12 @@ export class PostService {
 
     if (!authorIdMatched) throw new UnauthorizedException();
 
+    // First delete all related comments to avoid foreign key constraint violations
+    await this.prisma.comment.deleteMany({
+      where: { postId },
+    });
+
+    // Now it's safe to delete the post
     const result = await this.prisma.post.delete({
       where: {
         id: postId,

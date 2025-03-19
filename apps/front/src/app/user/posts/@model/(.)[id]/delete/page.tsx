@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { deletePost } from "@/lib/actions/posts.action";
 import { ExclamationTriangleIcon } from "@heroicons/react/24/outline";
+import { useRouter } from "next/navigation";
 import { use } from "react";
 
 type Props = {
@@ -24,7 +25,17 @@ type Props = {
 const InterceptorDeletePostPage = (props: Props) => {
   const params = use(props.params);
   const postId = parseInt(params.id);
+  const router = useRouter();
 
+  const handleDelete = async () => {
+    try {
+      await deletePost(postId);
+      router.push("/user/posts");
+      router.refresh();
+    } catch (error) {
+      console.error("Failed to delete post:", error);
+    }
+  };
   return (
     <AlertDialog open>
       <AlertDialogContent className="sm:max-w-[425px]">
@@ -48,9 +59,9 @@ const InterceptorDeletePostPage = (props: Props) => {
             <Button
               variant="destructive"
               className="w-full sm:w-auto"
-              onClick={() => deletePost(postId)}
+              onClick={handleDelete}
             >
-              <a href="/user/posts">Delete Post</a>
+              Delete Post
             </Button>
           </AlertDialogAction>
         </AlertDialogFooter>

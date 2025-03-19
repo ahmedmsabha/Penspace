@@ -67,7 +67,7 @@ export function Profile({ user }: Props) {
         <nav className="py-2">
           <div className="px-1">
             <Link
-              href="/dashboard"
+              href="/"
               className="flex items-center gap-3 px-3 py-2 text-sm text-slate-700 dark:text-slate-200 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
             >
               <LayoutDashboardIcon className="h-4 w-4 text-slate-500" />

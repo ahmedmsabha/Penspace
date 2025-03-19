@@ -79,13 +79,19 @@ export async function saveNewPost(
       errors: validatedFields.error.flatten().fieldErrors,
     };
   let thumbnailUrl = "";
-  if (validatedFields.data.thumbnail)
+  if (
+    validatedFields.data.thumbnail &&
+    validatedFields.data.thumbnail instanceof File &&
+    validatedFields.data.thumbnail.size > 0
+  )
     thumbnailUrl = await uploadThumbnail(validatedFields.data.thumbnail);
-
 
   const data = await authFetchGraphQL(print(CREATE_POST_MUTATION), {
     input: {
-      ...validatedFields.data,
+      title: validatedFields.data.title,
+      content: validatedFields.data.content,
+      tags: validatedFields.data.tags,
+      published: validatedFields.data.published,
       thumbnail: thumbnailUrl,
     },
   });
